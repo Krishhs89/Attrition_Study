@@ -1,0 +1,16 @@
+<svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+<rect width="100%" height="100%" fill="white"/>
+<text x="250" y="40" font-family="Arial" font-size="20" text-anchor="middle">Confusion Matrix</text>
+<text x="175" y="90" font-family="Arial" font-size="14" text-anchor="middle">Predicted: No</text>
+<text x="325.0" y="90" font-family="Arial" font-size="14" text-anchor="middle">Predicted: Yes</text>
+<text x="80" y="175" font-family="Arial" font-size="14" text-anchor="middle" transform="rotate(-90, 80, 175)">Actual: No</text>
+<text x="80" y="325.0" font-family="Arial" font-size="14" text-anchor="middle" transform="rotate(-90, 80, 325.0)">Actual: Yes</text>
+<rect x="100" y="100" width="150" height="150" fill="#cce5ff" stroke="black"/>
+<text x="175" y="175" font-family="Arial" font-size="20" text-anchor="middle">126</text>
+<rect x="250" y="100" width="150" height="150" fill="#e6f2ff" stroke="black"/>
+<text x="325.0" y="175" font-family="Arial" font-size="20" text-anchor="middle">0</text>
+<rect x="100" y="250" width="150" height="150" fill="#e6f2ff" stroke="black"/>
+<text x="175" y="325.0" font-family="Arial" font-size="20" text-anchor="middle">74</text>
+<rect x="250" y="250" width="150" height="150" fill="#004080" stroke="black"/>
+<text x="325.0" y="325.0" font-family="Arial" font-size="20" fill="white" text-anchor="middle">0</text>
+</svg>

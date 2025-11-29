@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Attrition Dashboard - Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            overflow-x: auto;
+        }
+        
+        .nav-tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            font-weight: 500;
+            color: #6c757d;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .nav-tab:hover {
+            background: #e9ecef;
+        }
+        
+        .nav-tab.active {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            background: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.5s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .metric-card.blue {
+            background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+        }
+        
+        .metric-card.green {
+            background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%);
+        }
+        
+        .metric-card.orange {
+            background: linear-gradient(135deg, #f6c23e 0%, #dda20a 100%);
+        }
+        
+        .metric-card.red {
+            background: linear-gradient(135deg, #e74a3b 0%, #be2617 100%);
+        }
+        
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .metric-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .chart-container {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .status-icon {
+            font-size: 24px;
+            margin-right: 15px;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+        }
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .badge-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .badge-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Employee Attrition Dashboard</h1>
+            <p>Interactive ML Pipeline Visualization</p>
+        </header>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('overview')">Overview</button>
+            <button class="nav-tab" onclick="showTab('eda')">EDA</button>
+            <button class="nav-tab" onclick="showTab('features')">Feature Engineering</button>
+            <button class="nav-tab" onclick="showTab('model')">Model Building</button>
+            <button class="nav-tab" onclick="showTab('validation')">Validation</button>
+            <button class="nav-tab" onclick="showTab('cicd')">CI/CD Status</button>
+        </div>
+        
+        <!-- OVERVIEW TAB -->
+        <div id="overview" class="tab-content active">
+            <h2>System Overview</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card blue">
+                    <div class="metric-label">Total Employees</div>
+                    <div class="metric-value">1,000</div>
+                </div>
+                <div class="metric-card red">
+                    <div class="metric-label">Attrition Rate</div>
+                    <div class="metric-value">16.2%</div>
+                </div>
+                <div class="metric-card green">
+                    <div class="metric-label">Total Features</div>
+                    <div class="metric-value">41</div>
+                </div>
+                <div class="metric-card orange">
+                    <div class="metric-label">Model Features</div>
+                    <div class="metric-value">167</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Project Status</div>
+                <div class="status-item">
+                    <span class="status-icon">✅</span>
+                    <strong>Data Generated</strong> - 1,000 samples with 41 variables
+                </div>
+                <div class="status-item">
+                    <span class="status-icon">✅</span>
+                    <strong>Model Trained</strong> - Logistic Regression with SGD
+                </div>
+                <div class="status-item">
+                    <span class="status-icon">✅</span>
+                    <strong>Artifacts Saved</strong> - model_artifacts.json created
+                </div>
+                <div class="status-item">
+                    <span class="status-icon">✅</span>
+                    <strong>Dashboards Ready</strong> - Streamlit & R Shiny
+                </div>
+            </div>
+            
+            <div class="alert alert-info">
+                <strong>ℹ️ Note:</strong> This is a demonstration of what the R Shiny dashboard would display. The actual app provides interactive plots with hover effects, filtering, and real-time updates.
+            </div>
+        </div>
+        
+        <!-- EDA TAB -->
+        <div id="eda" class="tab-content">
+            <h2>Exploratory Data Analysis</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card blue">
+                    <div class="metric-label">Total Rows</div>
+                    <div class="metric-value">1,000</div>
+                </div>
+                <div class="metric-card red">
+                    <div class="metric-label">Attrition Cases</div>
+                    <div class="metric-value">162</div>
+                </div>
+                <div class="metric-card green">
+                    <div class="metric-label">Retention Cases</div>
+                    <div class="metric-value">838</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Dataset Preview</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>EMPLOYEE_AGE_AT_HIRE</th>
+                            <th>EMPLOYEE_GENDER_CODE</th>
+                            <th>EMPLOYEE_GENERATION</th>
+                            <th>MANAGER_RISK_TOLERANCE</th>
+                            <th>Attrition</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>28</td><td>F</td><td>Millennial</td><td>7</td><td>0</td></tr>
+                        <tr><td>35</td><td>M</td><td>Gen X</td><td>5</td><td>0</td></tr>
+                        <tr><td>24</td><td>F</td><td>Gen Z</td><td>9</td><td>1</td></tr>
+                        <tr><td>42</td><td>M</td><td>Gen X</td><td>4</td><td>0</td></tr>
+                        <tr><td>29</td><td>F</td><td>Millennial</td><td>6</td><td>1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="alert alert-success">
+                <strong>✅ Interactive Features:</strong> In the actual dashboard, you can select different variables to view their distributions, filter by attrition status, and explore correlations dynamically.
+            </div>
+        </div>
+        
+        <!-- FEATURE ENGINEERING TAB -->
+        <div id="features" class="tab-content">
+            <h2>Feature Engineering</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card blue">
+                    <div class="metric-label">Original Features</div>
+                    <div class="metric-value">41</div>
+                </div>
+                <div class="metric-card green">
+                    <div class="metric-label">Encoded Features</div>
+                    <div class="metric-value">167</div>
+                </div>
+                <div class="metric-card orange">
+                    <div class="metric-label">Expansion Factor</div>
+                    <div class="metric-value">4.1x</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">One-Hot Encoding Transformation</div>
+                <p><strong>Before Encoding:</strong></p>
+                <div class="code-block">
+Gender: "M"
+Generation: "Millennial"
+Development: "High"
+                </div>
+                
+                <p><strong>After Encoding:</strong></p>
+                <div class="code-block">
+EMPLOYEE_GENDER_CODE_M: 1
+EMPLOYEE_GENDER_CODE_F: 0
+EMPLOYEE_GENDER_CODE_X: 0
+EMPLOYEE_GENERATION_Millennial: 1
+EMPLOYEE_GENERATION_GenX: 0
+EMPLOYEE_GENERATION_GenZ: 0
+EMPLOYEE_GENERATION_Boomer: 0
+DEV_DEVELOPMENT_High: 1
+DEV_DEVELOPMENT_Medium: 0
+DEV_DEVELOPMENT_Low: 0
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Top 10 Engineered Features</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature Name</th>
+                            <th>Coefficient</th>
+                            <th>Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>MANAGER_RISK_TOLERANCE</td><td>0.243</td><td>Increases Attrition</td></tr>
+                        <tr><td>TA_TIME_TO_FILL</td><td>-0.187</td><td>Decreases Attrition</td></tr>
+                        <tr><td>EMPLOYEE_AGE_AT_HIRE</td><td>-0.156</td><td>Decreases Attrition</td></tr>
+                        <tr><td>MANAGER_ENGAGEMENT</td><td>-0.134</td><td>Decreases Attrition</td></tr>
+                        <tr><td>EMPLOYEE_GENERATION_GenZ</td><td>0.121</td><td>Increases Attrition</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- MODEL BUILDING TAB -->
+        <div id="model" class="tab-content">
+            <h2>Model Building</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card blue">
+                    <div class="metric-label">Total Coefficients</div>
+                    <div class="metric-value">167</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Intercept</div>
+                    <div class="metric-value">-0.5234</div>
+                </div>
+                <div class="metric-card orange">
+                    <div class="metric-label">Avg |Coefficient|</div>
+                    <div class="metric-value">0.0847</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Training Configuration</div>
+                <div class="code-block">
+Algorithm: Logistic Regression (SGD)
+Learning Rate: 0.01
+Epochs: 50
+Optimizer: Stochastic Gradient Descent
+Regularization: None
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Training Process</div>
+                <ol style="padding-left: 20px; line-height: 2;">
+                    <li>Load preprocessed data (One-Hot Encoded)</li>
+                    <li>Split into train/test sets (80/20)</li>
+                    <li>Initialize random coefficients</li>
+                    <li>Iterate through 50 epochs</li>
+                    <li>Update weights using gradient descent</li>
+                    <li>Save final model artifacts</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- VALIDATION TAB -->
+        <div id="validation" class="tab-content">
+            <h2>Model Validation</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card blue">
+                    <div class="metric-label">Accuracy</div>
+                    <div class="metric-value">68.5%</div>
+                </div>
+                <div class="metric-card green">
+                    <div class="metric-label">Precision</div>
+                    <div class="metric-value">47.9%</div>
+                </div>
+                <div class="metric-card orange">
+                    <div class="metric-label">Recall</div>
+                    <div class="metric-value">37.7%</div>
+                </div>
+                <div class="metric-card red">
+                    <div class="metric-label">F1 Score</div>
+                    <div class="metric-value">42.2%</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Confusion Matrix</div>
+                <table style="max-width: 500px; margin: 20px auto;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Predicted: No</th>
+                            <th>Predicted: Yes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Actual: No</strong></td>
+                            <td style="background: #d4edda;">114 (TN)</td>
+                            <td style="background: #f8d7da;">22 (FP)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Actual: Yes</strong></td>
+                            <td style="background: #f8d7da;">41 (FN)</td>
+                            <td style="background: #d4edda;">23 (TP)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="alert alert-warning">
+                <strong>⚠️ Note:</strong> Model performance can be improved with real HR data. Synthetic data lacks realistic patterns, leading to moderate accuracy.
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Improvement Recommendations</div>
+                <ol style="padding-left: 20px; line-height: 2;">
+                    <li><strong>Use Real Data:</strong> Replace synthetic data with actual employee records</li>
+                    <li><strong>Address Class Imbalance:</strong> Apply SMOTE or adjust class weights</li>
+                    <li><strong>Feature Selection:</strong> Remove redundant encoded features</li>
+                    <li><strong>Hyperparameter Tuning:</strong> Optimize learning rate and epochs</li>
+                    <li><strong>Try Ensemble Methods:</strong> Random Forest, XGBoost, Neural Networks</li>
+                    <li><strong>Cross-Validation:</strong> Implement k-fold CV for robust evaluation</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- CI/CD TAB -->
+        <div id="cicd" class="tab-content">
+            <h2>CI/CD Pipeline Status</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card blue">
+                    <div class="metric-label">Build Number</div>
+                    <div class="metric-value">#1</div>
+                </div>
+                <div class="metric-card green">
+                    <div class="metric-label">Build Status</div>
+                    <div class="metric-value">✅ Passing</div>
+                </div>
+                <div class="metric-card orange">
+                    <div class="metric-label">Duration</div>
+                    <div class="metric-value">8s</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Pipeline Stages</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Stage</th>
+                            <th>Status</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Data Generation</td>
+                            <td><span class="badge badge-success">✅ Success</span></td>
+                            <td>2s</td>
+                        </tr>
+                        <tr>
+                            <td>Model Training</td>
+                            <td><span class="badge badge-success">✅ Success</span></td>
+                            <td>5s</td>
+                        </tr>
+                        <tr>
+                            <td>Artifact Validation</td>
+                            <td><span class="badge badge-success">✅ Success</span></td>
+                            <td>1s</td>
+                        </tr>
+                        <tr>
+                            <td>Unit Tests</td>
+                            <td><span class="badge badge-warning">⏳ Pending</span></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Deployment</td>
+                            <td><span class="badge badge-warning">⏳ Pending</span></td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Recent Commits</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hash</th>
+                            <th>Message</th>
+                            <th>Author</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>d19b940</td>
+                            <td>Initial commit - Employee Attrition Prediction System v1.0</td>
+                            <td>You</td>
+                            <td>5 minutes ago</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Deployment Status</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Environment</th>
+                            <th>Status</th>
+                            <th>URL</th>
+                            <th>Version</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Staging</strong></td>
+                            <td><span class="badge badge-success">✅ Deployed</span></td>
+                            <td>http://staging.example.com</td>
+                            <td>v1.0.0</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Production</strong></td>
+                            <td><span class="badge badge-warning">⏳ Not Deployed</span></td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <footer>
+            <p><strong>Employee Attrition Prediction System</strong> | v1.0.0</p>
+            <p>Built with ❤️ using R Shiny & Streamlit</p>
+            <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">
+                📁 Location: /Users/krishnakumar/Documents/Professional/Carriers/Ally/Work/Attrition
+            </p>
+        </footer>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all nav tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked nav tab
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

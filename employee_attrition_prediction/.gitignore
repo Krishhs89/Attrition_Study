@@ -1,0 +1,47 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual Environments
+venv/
+env/
+ENV/
+
+# Data files (keep structure, ignore data)
+data/*.csv
+!data/.gitkeep
+
+# Model artifacts (version separately)
+models/*.json
+models/*.pkl
+!models/.gitkeep
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Temporary files
+tmp/
+temp/
+*.tmp

@@ -1,0 +1,49 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+<rect width="100%" height="100%" fill="white"/>
+<text x="400" y="30" font-family="Arial" font-size="20" text-anchor="middle">Top Feature Determinants</text>
+<text x="340" y="75" font-family="Arial" font-size="12" text-anchor="end">EMPLOYEE_AGE_AT_HIRE</text>
+<rect x="350" y="60" width="400.0" height="20" fill="red"/>
+<text x="755.0" y="75" font-family="Arial" font-size="10">  -1.134</text>
+<text x="340" y="105" font-family="Arial" font-size="12" text-anchor="end">TA_TIME_TO_START</text>
+<rect x="350" y="90" width="94.0807745236" height="20" fill="red"/>
+<text x="449.080774524" y="105" font-family="Arial" font-size="10">  -0.267</text>
+<text x="340" y="135" font-family="Arial" font-size="12" text-anchor="end">MANAGER_RISK_CULTURE</text>
+<rect x="350" y="120" width="79.9275718245" height="20" fill="blue"/>
+<text x="434.927571824" y="135" font-family="Arial" font-size="10">  0.227</text>
+<text x="340" y="165" font-family="Arial" font-size="12" text-anchor="end">MANAGER_DIVERSITY_COMMITMENT</text>
+<rect x="350" y="150" width="57.1319312086" height="20" fill="red"/>
+<text x="412.131931209" y="165" font-family="Arial" font-size="10">  -0.162</text>
+<text x="340" y="195" font-family="Arial" font-size="12" text-anchor="end">TA_TIME_TO_FILL</text>
+<rect x="350" y="180" width="52.8472716805" height="20" fill="blue"/>
+<text x="407.847271681" y="195" font-family="Arial" font-size="10">  0.150</text>
+<text x="340" y="225" font-family="Arial" font-size="12" text-anchor="end">MANAGER_JOB_FEEDBACK</text>
+<rect x="350" y="210" width="43.2964539084" height="20" fill="blue"/>
+<text x="398.296453908" y="225" font-family="Arial" font-size="10">  0.123</text>
+<text x="340" y="255" font-family="Arial" font-size="12" text-anchor="end">MANAGER_RISK_TOLERANCE</text>
+<rect x="350" y="240" width="37.088260379" height="20" fill="red"/>
+<text x="392.088260379" y="255" font-family="Arial" font-size="10">  -0.105</text>
+<text x="340" y="285" font-family="Arial" font-size="12" text-anchor="end">MANAGER_ENGAGEMENT_RECOMMEND</text>
+<rect x="350" y="270" width="34.3401072913" height="20" fill="blue"/>
+<text x="389.340107291" y="285" font-family="Arial" font-size="10">  0.097</text>
+<text x="340" y="315" font-family="Arial" font-size="12" text-anchor="end">MANAGER_RISK_COMMUNICATION</text>
+<rect x="350" y="300" width="33.9691080354" height="20" fill="blue"/>
+<text x="388.969108035" y="315" font-family="Arial" font-size="10">  0.096</text>
+<text x="340" y="345" font-family="Arial" font-size="12" text-anchor="end">MANAGER_RESPONSERATE</text>
+<rect x="350" y="330" width="31.0464887015" height="20" fill="blue"/>
+<text x="386.046488701" y="345" font-family="Arial" font-size="10">  0.088</text>
+<text x="340" y="375" font-family="Arial" font-size="12" text-anchor="end">MANAGER_BELONGING</text>
+<rect x="350" y="360" width="30.403241793" height="20" fill="blue"/>
+<text x="385.403241793" y="375" font-family="Arial" font-size="10">  0.086</text>
+<text x="340" y="405" font-family="Arial" font-size="12" text-anchor="end">TA_TIME_TO_ACCEPT</text>
+<rect x="350" y="390" width="30.2872958356" height="20" fill="blue"/>
+<text x="385.287295836" y="405" font-family="Arial" font-size="10">  0.086</text>
+<text x="340" y="435" font-family="Arial" font-size="12" text-anchor="end">EMPLOYEE_HIRE_DIRECT_MANAGER_TENURE</text>
+<rect x="350" y="420" width="25.1170348926" height="20" fill="blue"/>
+<text x="380.117034893" y="435" font-family="Arial" font-size="10">  0.071</text>
+<text x="340" y="465" font-family="Arial" font-size="12" text-anchor="end">MANAGER_ENGAGEMENT_ESAT</text>
+<rect x="350" y="450" width="24.6023644621" height="20" fill="red"/>
+<text x="379.602364462" y="465" font-family="Arial" font-size="10">  -0.070</text>
+<text x="340" y="495" font-family="Arial" font-size="12" text-anchor="end">EMPLOYEE_HIRE_COST_CENTER_NAME_SUPERCATEGORY_..</text>
+<rect x="350" y="480" width="19.8694321198" height="20" fill="red"/>
+<text x="374.86943212" y="495" font-family="Arial" font-size="10">  -0.056</text>
+</svg>

@@ -1,0 +1,55 @@
+name: ML Pipeline CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "2.7" # Matching your environment
+
+      - name: Generate Data
+        run: python generate_data.py
+
+      - name: Train Model
+        run: python train_model.py
+
+      - name: Run Tests
+        run: |
+          # Simple test to check if artifacts exist
+          if [ -f "model_artifacts.json" ]; then
+            echo "Model artifacts generated successfully."
+          else
+            echo "Error: Model artifacts not found."
+            exit 1
+          fi
+
+      - name: Build Docker Image (Simulation)
+        run: |
+          echo "Building Docker image..."
+          # docker build -t my-ml-model .
+          echo "Image built."
+
+  deploy:
+    needs: build-and-train
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Deploy to Production
+        run: |
+          echo "Deploying to production server..."
+          # In real life:
+          # scp model_artifacts.json user@server:/path/to/app
+          # ssh user@server "systemctl restart ml-service"
+          echo "Deployment complete."
